@@ -37,9 +37,9 @@ async function Run() {
     // fetch assign img src part:
     // 
     // after split & filter the output would be like:
-    //     unescape(w1q9vcac6j+w1q9vcac6j+k0__0r_4av(4)+un_5fae6_(bg21mnh, 0, 1)+um1a2k1q9+hac6j0hp_+k0__0r_4av(3)+k0__0r_4av(2)+k0__0r_4av(3)+w1q9vcac6j+un_5fae6_(bg21mnh,1,1)+w1q9vcac6j+ti+w1q9vcac6j+i9g00mg21+w1q9vcac6j+nn(p)+e_4avn23+un_5fae6_(er3i6ho_,mm(p),3)+um1a2k1q9+k0__0r_4av(1))
+    //     ge(k0__0r_4av(6)+k0__0r_4av(5)).src=unescape(w1q9vcac6j+w1q9vcac6j+k0__0r_4av(4)+un_5fae6_(bg21mnh, 0, 1)+um1a2k1q9+hac6j0hp_+k0__0r_4av(3)+k0__0r_4av(2)+k0__0r_4av(3)+w1q9vcac6j+un_5fae6_(bg21mnh,1,1)+w1q9vcac6j+ti+w1q9vcac6j+i9g00mg21+w1q9vcac6j+nn(p)+e_4avn23+un_5fae6_(er3i6ho_,mm(p),3)+um1a2k1q9+k0__0r_4av(1))
     // 
-    // we use replace to remove "ge(k0__0r_4av(6)+k0__0r_4av(5)).src="" part
+    // we use replace to remove "ge(k0__0r_4av(6)+k0__0r_4av(5)).src=" part
     let srcScript = script.split(';').filter(el => el.includes('src='))[0].replace(/.*\.src=/, '')
 
     // we need lc(), nn(), mm(), spp() to eval script
