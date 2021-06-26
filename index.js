@@ -44,7 +44,7 @@ async function Run() {
 
     // we need lc(), nn(), mm(), spp() to eval script
     // for spp(), we only need to mock it since it does not matters
-    const spp = () => {}    
+    const spp = () => {}
     eval(lcScript)
     eval(nnScript)
     eval(mmScript)
