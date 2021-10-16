@@ -1,9 +1,10 @@
-const fetch = require('node-fetch')
+import fetch from 'node-fetch';
+import { createBrotliCompress } from 'zlib';
 
-const nviewUrl = 'https://comic.aya.click/js/nview.js'
+const nviewUrl = 'https://comicabc.com/js/nview.js'
 
 // our target
-const url = 'https://comic.aya.click/online/best_6748.html?ch=57-3'
+const url = 'https://comicabc.com/online/new-19317.html?ch=1'
 
 // we need these functions to eval script
 // but these functions are provided in https://comic.aya.click/js/nview.js
@@ -22,17 +23,25 @@ async function Run() {
             src: ""
         })
     }
+    const spp = () => {}
 
     // Get raw string of function lc(), nn(), mm()
     const nviewResp = await fetch(nviewUrl)
     const nviewScript = await nviewResp.text()
+    // console.log(`nviewScript = ${nviewScript}`)
+
     const lcScript = nviewScript.match(lcRegex)[1]
     const nnScript = nviewScript.match(nnRegex)[1]
     const mmScript = nviewScript.match(mmRegex)[1]
 
+    //console.log(`lcScript = ${lcScript}`)
+    //console.log(`nnScript = ${nnScript}`)
+    //console.log(`mmScript = ${mmScript}`)
+
     // cut only the javaScript part
     let script = html.substring(html.indexOf('function request'))
     script = script.substring(0, script.indexOf('</script>'))
+    //console.log(`script = ${script}`)
 
     // fetch assign img src part:
     // 
@@ -41,17 +50,20 @@ async function Run() {
     // 
     // we use replace to remove "ge(k0__0r_4av(6)+k0__0r_4av(5)).src=" part
     let srcScript = script.split(';').filter(el => el.includes('src='))[0].replace(/.*\.src=/, '')
+    //console.log(`srcScript = ${srcScript}`)
 
     // we need lc(), nn(), mm(), spp() to eval script
     // for spp(), we only need to mock it since it does not matters
-    const spp = () => {}
-    eval(lcScript)
-    eval(nnScript)
-    eval(mmScript)
-    eval(script)
-    var src = eval(`(${srcScript})`)
-
-    console.log(src) // output: //img4.8comic.com/3/6748/57/003_rn3.jpg
+    let answer = [
+        lcScript,
+        nnScript,
+        mmScript,
+        script,
+        `(${srcScript})`
+    ].join(';')
+    
+    var src = eval(answer)
+    console.log(`src = ${src}`) // output: //img8.8comic.com/4/19317/1/001_HJ3.jpg
 }
 
 Run()
